@@ -3,127 +3,44 @@ import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import axios from "axios";
-
+import { getFrameMetadata } from '@coinbase/onchainkit/frame';
+import type { Metadata } from 'next';
 const inter = Inter({ subsets: ["latin"] });
- const getUserIDs=()=>{
-  try {
-    axios.get('https://nemes.farcaster.xyz/v1/fids').then((res)=>{
-      console.log({res})
-    })
-  } catch (error) {
-    console.log(error)
-  }
- }
- getUserIDs()
+const frameMetadata = getFrameMetadata({
+  buttons: [
+    {
+      label: 'We love BOAT',
+    },
+  ],
+  image: 'https://build-onchain-apps.vercel.app/release/v-0-17.png',
+  postUrl: 'https://build-onchain-apps.vercel.app/api/frame',
+});
+ 
+// Step 3. Add your metadata in the Next.js metadata utility
+export const metadata: Metadata = {
+  manifest: '/manifest.json',
+  other: {
+    ...frameMetadata
+  },
+};
+//  const getUserIDs=()=>{
+//   try {
+//     axios.get('https://nemes.farcaster.xyz/v1/fids').then((res)=>{
+//       console.log({res})
+//     })
+//   } catch (error) {
+//     console.log(error)
+//   }
+//  }
+//  getUserIDs()
+
 export default function Home() {
   return (
     <>
       <Head>
-        <title>This is frame 7</title>
-        <meta property="fc:frame" content="vNext" />
-        <meta
-          property="fc:video"
-          content="https://sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4"
-        />
-        <meta property="fc:video:width" content="640" />
-        <meta property="fc:video:height" content="360" />
-        <meta property="fc:video:type" content="video/mp4" />
+      <h1>Chad Finance</h1>
       </Head>
-      <main className={`${styles.main} ${inter.className}`}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>src/pages/index.tsx</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{" "}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
-          </div>
-        </div>
-
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-        </div>
-
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
+      
     </>
   );
 }
